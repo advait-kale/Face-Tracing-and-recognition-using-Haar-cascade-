@@ -1,0 +1,4 @@
+
+# Ignore everything inside Images
+Images/**
+!Images/.gitkeep
