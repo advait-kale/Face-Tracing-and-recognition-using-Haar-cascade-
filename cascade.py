@@ -1,7 +1,10 @@
 import cv2
 import numpy as np
-
+import os
 face_cascade = cv2.CascadeClassifier(r"c:\Advait\VS_Code\VS code 2.0\Face recognition\haarcascade_frontalface_default.xml")
+
+#variable declaration
+count = 0 #couning the images 
 
 cap = cv2.VideoCapture(0)
 while True:
@@ -12,9 +15,25 @@ while True:
         cv2.rectangle(img, (x,y), (x+w, y+h), (255,0,0), 2)
         #int arguments are the img then starting point of the rectange then the ending point of the rectange
         #then the color of the rectange then the width of the rectangle
+
+        #extract face data
+        face = gray[y:y+h, x:x+h]
+        face = cv2.resize(face, (100,100))
+
+        file_name = os.path.join("C:\Advait\VS_Code\VS code 2.0\Face recognition\Images\known", f"face_{count}.jpg")
+        cv2.imwrite(file_name, face)
+        count += 1
+
+        #  Stop after 100 images
+        # if count == 100:
+        #     break
+
+
     cv2.imshow('img',img)#Displays the current frame (img) in a window titled 'img'
     k = cv2.waitKey(30) & 0xff
     if(k == 27):#Checks if the pressed key is ESC (ASCII value 27).
+        break
+    elif(count >= 100):
         break
 cap.release()#Releases the webcam resource.
 cv2.destroyAllWindows()
