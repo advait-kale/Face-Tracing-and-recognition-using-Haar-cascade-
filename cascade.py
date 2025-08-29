@@ -8,12 +8,12 @@ global count #couning the images
 global name
 cap = cv2.VideoCapture(0)
 save_dir = r"C:\Advait\VS_Code\VS code 2.0\Face recognition\Images\known"
-if not os.path.exists(save_dir):
-    os.makedirs(save_dir)
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
 def take_images():
     temp_name = input_name()
+    count = 0
     while True:
-        count = 0
         ret, img = cap.read()
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -29,8 +29,8 @@ def take_images():
             cv2.imwrite(file_name, face)
             count += 1
 
-        cv2.imshow('img',img)#Displays the current frame (img) in a window titled 'img'
-        k = cv2.waitKey(30) #& 0xff
+        cv2.imshow('img',img) #Displays the current frame (img) in a window titled 'img'
+        k = cv2.waitKey(30) & 0xff
         if(k == 27 or count >= 100):#Checks if the pressed key is ESC (ASCII value 27).
             break
 
