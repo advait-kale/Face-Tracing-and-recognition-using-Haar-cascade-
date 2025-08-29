@@ -5,7 +5,7 @@ face_cascade = cv2.CascadeClassifier(r"c:\Advait\VS_Code\VS code 2.0\Face recogn
 
 #variable declaration
 global count #couning the images 
-
+global name
 cap = cv2.VideoCapture(0)
 def take_images():
     while True:
@@ -21,15 +21,9 @@ def take_images():
             #extract face data
             face = gray[y:y+h, x:x+h]
             face = cv2.resize(face, (100,100))
-
-            file_name = os.path.join("C:\Advait\VS_Code\VS code 2.0\Face recognition\Images\known", f"face_{count}.jpg")
+            file_name = os.path.join("C:\Advait\VS_Code\VS code 2.0\Face recognition\Images\known", f"{name}_{count}.jpg")
             cv2.imwrite(file_name, face)
             count += 1
-
-            #  Stop after 100 images
-            # if count == 100:
-            #     break
-
 
         cv2.imshow('img',img)#Displays the current frame (img) in a window titled 'img'
         k = cv2.waitKey(30) #& 0xff
@@ -40,6 +34,14 @@ def take_images():
     cap.release()#Releases the webcam resource.
     cv2.destroyAllWindows()
 
+def input_name():
+    name = input("Enter name ")
 
 
-take_images()
+def main():
+    temp_button = input("Enter 1 to run ")
+    if(temp_button == 1):
+        input_name()
+        take_images()
+
+main()
