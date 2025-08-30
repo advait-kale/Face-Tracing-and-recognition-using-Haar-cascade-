@@ -9,12 +9,19 @@ face_cascade = cv2.CascadeClassifier(r"c:\Advait\VS_Code\VS code 2.0\Face recogn
 #variable declaration
 global count #couning the images 
 global name
+global temp_name
+
+def input_name():
+    name = input("Enter name ")
+    return name
+
+temp_name = input_name()
+
 cap = cv2.VideoCapture(0)
 save_dir = r"C:\Advait\VS_Code\VS code 2.0\Face recognition\Images\known"
 # if not os.path.exists(save_dir):
 #     os.makedirs(save_dir)
 def take_images():
-    temp_name = input_name()
     count = 0
     while True:
         ret, img = cap.read()
@@ -40,20 +47,15 @@ def take_images():
     cap.release()#Releases the webcam resource.
     cv2.destroyAllWindows()
 def analyse_img():
-    temp_name = input_name()
     print("Analysing Image")
     for i in range(100):
-        file_path = os.path.join(save_dir,f"{temp_name}_{i}.jpeg")
+        file_path = os.path.join(save_dir,f"{input_name()}_{i}.jpeg")
         if os.path.exists(file_path):
             img = cv2.imread(file_path)
             result = DeepFace.analyze(actions="Gender")
         else:
             raise_error()
     print(result)
-
-def input_name():
-    name = input("Enter name ")
-    return name
 
 def raise_error():
     raise Exception("Error")
@@ -62,7 +64,7 @@ def main():
     temp_button = input("Enter 1 to run ")
     if(temp_button == '1'):
         print("Hi Temp this will beocome a seperate winow to woth buttons")
+        input_name()
         take_images()
-        analyse_img()
 
 main()
