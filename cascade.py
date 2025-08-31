@@ -66,5 +66,6 @@ def main():
         print("Hi Temp this will beocome a seperate winow to woth buttons")
         input_name()
         take_images()
+        analyse_img()
 
 main()
