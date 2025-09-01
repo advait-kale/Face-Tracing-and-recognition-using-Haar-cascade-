@@ -1,8 +1,6 @@
 import cv2
 import numpy as np
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
-from deepface import DeepFace
 
 face_cascade = cv2.CascadeClassifier(r"c:\Advait\VS_Code\VS code 2.0\Face recognition\haarcascade_frontalface_default.xml")
 
@@ -46,16 +44,6 @@ def take_images():
 
     cap.release()#Releases the webcam resource.
     cv2.destroyAllWindows()
-def analyse_img():
-    print("Analysing Image")
-    for i in range(100):
-        file_path = os.path.join(save_dir,f"{input_name()}_{i}.jpeg")
-        if os.path.exists(file_path):
-            img = cv2.imread(file_path)
-            result = DeepFace.analyze(actions="Gender")
-        else:
-            raise_error()
-    print(result)
 
 def raise_error():
     raise Exception("Error")
@@ -66,6 +54,5 @@ def main():
         print("Hi Temp this will beocome a seperate winow to woth buttons")
         input_name()
         take_images()
-        analyse_img()
 
 main()
