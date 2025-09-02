@@ -57,6 +57,11 @@ def take_images():
     return True
 def analyse_img():
     print("Analysing Image")
+    cap = cv2.VideoCapture(0)   # re-open camera
+    if not cap.isOpened():
+        print("Error: Could not open camera")
+        return
+
     while True:
         ret, img = cap.read()
         if not ret or img is None:
@@ -75,12 +80,18 @@ def analyse_img():
             cv2.imwrite(file_name, face)
 
             # update known images list
-            known_images = [os.path.join(known_path, f) for f in os.listdir(known_path) if f.endswith(".jpeg") or f.endswith(".jpg")]
+            known_images = [
+                os.path.join(known_path, f)
+                for f in os.listdir(known_path)
+                if f.endswith(".jpeg") or f.endswith(".jpg")
+            ]
 
             # compare with known images
             for k_img in known_images:
                 try:
-                    result = DeepFace.verify(img1_path=file_name, img2_path=k_img, model_name="VGG-Face")
+                    result = DeepFace.verify(
+                        img1_path=file_name, img2_path=k_img, model_name="VGG-Face"
+                    )
                     if result["verified"]:
                         print(f"Match found: {file_name} matches {os.path.basename(k_img)}")
                         break
@@ -93,7 +104,6 @@ def analyse_img():
 
     cap.release()
     cv2.destroyAllWindows()
-
 
 def raise_error():
     raise Exception("Error")
