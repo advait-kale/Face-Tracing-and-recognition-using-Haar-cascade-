@@ -31,6 +31,7 @@ if not os.path.exists(runtime_path):
 def take_images():
     print("Taking Images")
     count = 0
+    start_time = time.time()
     while True:
         ret, img = cap.read()
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -49,7 +50,7 @@ def take_images():
 
         cv2.imshow('img',img) #Displays the current frame (img) in a window titled 'img'
         k = cv2.waitKey(30) & 0xff
-        if(k == 27 or count >= 100):#Checks if the pressed key is ESC (ASCII value 27).
+        if(k == 27) or (time.time() - start_time >= 5):#Checks if the pressed key is ESC (ASCII value 27).
             break
 
     cap.release()#Releases the webcam resource.
@@ -116,5 +117,7 @@ def main():
         if(return_value_flag):
             time.sleep(1)
             analyse_img()
+    elif(temp_button == '2'):
+        analyse_img()
 
 main()
